@@ -45,14 +45,6 @@ func (p *Pacboard) setIntersections(intersections [][2]int32) error {
 	return nil
 }
 
-//Sets intersection subclasses to match those of original Pacman board layout
-func (p *Pacboard) SetDefaultIntersections() error {
-	coords := make([][2]int32, 34)
-	coords[0] = [2]int32{0, 0}
-	err := p.setIntersections(coords)
-	return err
-}
-
 //Loads a Pacboard template file into Pacboard p
 //Based off of ioutil.ReadFile(), ioutil.readAll() from Go 1.9.2
 //[Copyright (c) 2009, The Go Authors. All Rights Reserved.]
