@@ -7,6 +7,8 @@
  **********************************************
  */
 
+//The pacman/packboard package provides for creating, loading, and modifying
+//game board data for pacman-like games
 package pacboard
 
 import (
