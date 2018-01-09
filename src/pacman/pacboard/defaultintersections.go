@@ -12,18 +12,18 @@ package pacboard
 //Sets intersection subclasses to match those of original Pacman board layout
 func (p *Pacboard) SetDefaultIntersections() error {
 	coords := make([][2]int32, 34)
-    
+
     //TODO: input actual coordinates
-	coords[0] = [2]int32{0, 0}
-	coords[1] = [2]int32{0, 0}
-	coords[2] = [2]int32{0, 0}
-	coords[3] = [2]int32{0, 0}
-	coords[4] = [2]int32{0, 0}
-	coords[5] = [2]int32{0, 0}
-	coords[6] = [2]int32{0, 0}
-	coords[7] = [2]int32{0, 0}
-	coords[8] = [2]int32{0, 0}
-	coords[9] = [2]int32{0, 0}
+	coords[1]  = [2]int32{0, 0}
+    coords[0]  = [2]int32{0, 0}
+	coords[2]  = [2]int32{0, 0}
+	coords[3]  = [2]int32{0, 0}
+	coords[4]  = [2]int32{0, 0}
+	coords[5]  = [2]int32{0, 0}
+	coords[6]  = [2]int32{0, 0}
+	coords[7]  = [2]int32{0, 0}
+	coords[8]  = [2]int32{0, 0}
+	coords[9]  = [2]int32{0, 0}
 	coords[10] = [2]int32{0, 0}
 	coords[11] = [2]int32{0, 0}
 	coords[12] = [2]int32{0, 0}
