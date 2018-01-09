@@ -192,26 +192,25 @@ func (p *Pacboard) loadFromFile(filePath string) error {
 	var row, col int32
 
 	for b, err := buffer.ReadByte(); err != io.EOF; b, err = buffer.ReadByte() {
-		//If character is New Line (ASCII 10), go to next column
-		if b == 10 {
+		if b == 10 { //If character is New Line (ASCII 10)
 			row++
 			col = 0
 		} else {
-			*(p.GetItem(col, row)) = getPacboardItem(b) //TODO: replace with p.SetItem()
+			p.SetItem(col, row, getPacboardItem(b))
 			col++
 		}
 	}
 	return nil
 }
 
-//Retrieve PacboardItem at row i and column j
+//Retrieve PacboardItem at column i and row j
 func (p *Pacboard) GetItem(i, j int32) *PacboardItem {
 	return &(*p)[j][i]
 }
 
-//Modify PacboardItem at row i and column j
+//Modify PacboardItem at column i and row j
 func (p *Pacboard) SetItem(i, j int32, value PacboardItem) {
-
+	(*p)[j][i] = value
 }
 
 //Retrieve the number of columns in Pacboard
