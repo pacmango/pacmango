@@ -13,54 +13,54 @@
  **********************************************
  */
 
- package pacboard
+package pacboard
 
- import(
-     "fmt"
-     "io"
-     "os"
-     "path/filepath"
-     "bytes"
- )
+import (
+	"bytes"
+	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+)
 
- //Loads a Pacboard template file into Pacboard p
- func (p *Pacboard) loadFromFile(filePath string) error {
- 	//Load file
- 	if ext := filepath.Ext(filePath); ext != ".txt" {
- 		return fmt.Errorf("Error: cannot read file \"%s\", file must be of type \".txt\"", filePath)
- 	}
+//Loads a Pacboard template file into Pacboard p
+func (p *Pacboard) loadFromFile(filePath string) error {
+	//Load file
+	if ext := filepath.Ext(filePath); ext != ".txt" {
+		return fmt.Errorf("Error: cannot read file \"%s\", file must be of type \".txt\"", filePath)
+	}
 
-    //Open file and load contents into bytes buffer
-    //Based off of ioutil.ReadFile(), ioutil.readAll() from Go 1.9.2
- 	file, err := os.Open(filePath)
- 	if err != nil {
- 		return fmt.Errorf("Error: could not open file \"%s\", file may not exist", filePath)
- 	}
- 	defer file.Close()
+	//Open file and load contents into bytes buffer
+	//Based off of ioutil.ReadFile(), ioutil.readAll() from Go 1.9.2
+	file, err := os.Open(filePath)
+	if err != nil {
+		return fmt.Errorf("Error: could not open file \"%s\", file may not exist", filePath)
+	}
+	defer file.Close()
 
- 	var filesize int64
+	var filesize int64
 
- 	if filestat, err := file.Stat(); err != nil {
- 		return fmt.Errorf("Error: could not get file information")
- 	} else {
- 		filesize = filestat.Size()
- 	}
- 	buffer := bytes.NewBuffer(make([]byte, 0, filesize))
- 	if _, err = buffer.ReadFrom(file); err != nil {
- 		return fmt.Errorf("Error: could not read from file")
- 	}
+	if filestat, err := file.Stat(); err != nil {
+		return fmt.Errorf("Error: could not get file information")
+	} else {
+		filesize = filestat.Size()
+	}
+	buffer := bytes.NewBuffer(make([]byte, 0, filesize))
+	if _, err = buffer.ReadFrom(file); err != nil {
+		return fmt.Errorf("Error: could not read from file")
+	}
 
- 	//Write file contents into Pacboard p as PacboardItems
- 	var row, col int32
+	//Write file contents into Pacboard p as PacboardItems
+	var row, col int32
 
- 	for b, err := buffer.ReadByte(); err != io.EOF; b, err = buffer.ReadByte() {
- 		if b == 10 { //If character is New Line (ASCII 10)
- 			row++
- 			col = 0
- 		} else {
- 			p.SetItem(col, row, getPacboardItem(b))
- 			col++
- 		}
- 	}
- 	return nil
- }
+	for b, err := buffer.ReadByte(); err != io.EOF; b, err = buffer.ReadByte() {
+		if b == 10 { //If character is New Line (ASCII 10)
+			row++
+			col = 0
+		} else {
+			p.SetItem(col, row, getPacboardItem(b))
+			col++
+		}
+	}
+	return nil
+}

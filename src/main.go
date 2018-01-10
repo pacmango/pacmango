@@ -15,8 +15,8 @@ import (
 	"log"
 )
 
-var Width int32 = 448
-var Height int32 = 576
+const Width int32 = 448
+const Height int32 = 576
 
 func checkQuitEvent(event sdl.Event) bool {
 	switch event.(type) {
