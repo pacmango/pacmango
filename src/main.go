@@ -12,11 +12,13 @@ package main
 import (
 	"fmt"
 	"github.com/veandco/go-sdl2/sdl"
+	"github.com/veandco/go-sdl2/ttf"
 	"log"
 )
 
 const Width int32 = 448
 const Height int32 = 576
+const TitleFontAddress string = "fonts/Ceviche_One/CevicheOne-Regular.ttf"
 
 func checkQuitEvent(event sdl.Event) bool {
 	switch event.(type) {
@@ -33,6 +35,12 @@ func main() {
 		log.Fatal(fmt.Errorf("Error: SDL initialization failed - %v", err))
 	}
 	defer sdl.Quit()
+
+	err = ttf.Init()
+	if err != nil {
+		log.Fatal(fmt.Errorf("Error: SDL2_TTF initialization failed - %v", err))
+	}
+	defer ttf.Quit()
 
 	//Create window and renderer
 	window, err := sdl.CreateWindow("Pacman", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, Width, Height, sdl.WINDOW_SHOWN)

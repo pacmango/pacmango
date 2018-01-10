@@ -11,6 +11,8 @@ package main
 
 import(
     "github.com/veandco/go-sdl2/sdl"
+    "log"
+    "fmt"
 )
 
 //Main gameloop
@@ -19,7 +21,10 @@ func gameloop(r *sdl.Renderer) {
 
 //Delete this when done
 func gameloopDebug(r *sdl.Renderer) {
-	renderSplash(r)
+	err := renderSplash(r)
+    if err != nil {
+        log.Fatal(fmt.Errorf("Error: could not render splash screen - %v", err))
+    }
 	r.Clear()
 	r.Present()
 }
