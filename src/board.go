@@ -7,23 +7,14 @@
  **********************************************
  */
 
-package main
+ package main
 
-import(
-    "github.com/veandco/go-sdl2/sdl"
-    "log"
-    "fmt"
-)
+ import(
+     "github.com/veandco/go-sdl2/sdl"
+ )
 
-//Main gameloop
-func gameloop(r *sdl.Renderer) {
-}
-
-//Delete this when done
-func gameloopDebug(r *sdl.Renderer) {
-	err := renderSplash(r)
-    if err != nil {
-        log.Fatal(fmt.Errorf("Error: could not render splash screen - %v", err))
-    }
-	renderBoard(r)
+func renderBoard(r *sdl.Renderer) error {
+    r.Clear()
+    r.Present()
+    return nil
 }
