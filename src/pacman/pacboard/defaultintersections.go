@@ -13,6 +13,7 @@ package pacboard
 func (p *Pacboard) SetDefaultIntersections() error {
 	coords := make([][2]int32, 34)
 
+	//TODO: reverse coordinates to be col, row like p.GetItem(i,j)
 	coords[0]  = [2]int32{4, 6}
 	coords[1]  = [2]int32{4, 21}
 	coords[2]  = [2]int32{8, 1}

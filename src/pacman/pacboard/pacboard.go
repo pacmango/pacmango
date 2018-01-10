@@ -12,17 +12,10 @@
 package pacboard
 
 import (
-	"bytes"
 	"fmt"
-	"io"
-	"os"
-	"path/filepath"
 )
 
-//Classes: Open; Barrier; Gate
-//Subclass of Open: Intersection
-//Subclass of Barrier: (Double_/Square_/--)Corner_[A,B,C,D]; Double_[VA,VB,HA,HB]; Horizontal; Vertical; Gate_End_[A,B]
-//Items: Empty (-1), Dot (0), Power (1), Other (Else)
+//See "getPacboardItem" for names of classes/subclasses/item numbers
 type PacboardItem struct {
 	Class    string
 	Subclass string
@@ -35,54 +28,11 @@ type Pacboard [][]PacboardItem
 //is at an intersection.
 func (p *Pacboard) setIntersections(intersections [][2]int32) error {
 	for _, coord := range intersections {
-		if pacitem := p.GetItem(coord[0], coord[1]); pacitem.Class != "Open" {
+		if pacitem := p.GetItem(coord[1], coord[0]); pacitem.Class != "Open" {
 			return fmt.Errorf("Error: invalid intersection coordinate \"%v\", board not open", coord)
 		} else {
 			pacitem.Subclass = "Intersection"
-			fmt.Println(p.GetItem(coord[0], coord[1]))
-		}
-	}
-	return nil
-}
-
-//Loads a Pacboard template file into Pacboard p
-//Based off of ioutil.ReadFile(), ioutil.readAll() from Go 1.9.2
-//[Copyright (c) 2009, The Go Authors. All Rights Reserved.]
-//[See GO_LICENSE.txt for the BSD license for Go 1.9.2]
-func (p *Pacboard) loadFromFile(filePath string) error {
-	//Load file
-	if ext := filepath.Ext(filePath); ext != ".txt" {
-		return fmt.Errorf("Error: cannot read file \"%s\", file must be of type \".txt\"", filePath)
-	}
-	file, err := os.Open(filePath)
-	if err != nil {
-		return fmt.Errorf("Error: could not open file \"%s\", file may not exist", filePath)
-	}
-	defer file.Close()
-
-	//Read file
-	var filesize int64
-
-	if filestat, err := file.Stat(); err != nil {
-		return fmt.Errorf("Error: could not get file information")
-	} else {
-		filesize = filestat.Size()
-	}
-	buffer := bytes.NewBuffer(make([]byte, 0, filesize))
-	if _, err = buffer.ReadFrom(file); err != nil {
-		return fmt.Errorf("Error: could not read from file")
-	}
-
-	//Write file contents into Pacboard p
-	var row, col int32
-
-	for b, err := buffer.ReadByte(); err != io.EOF; b, err = buffer.ReadByte() {
-		if b == 10 { //If character is New Line (ASCII 10)
-			row++
-			col = 0
-		} else {
-			p.SetItem(col, row, getPacboardItem(b))
-			col++
+			//fmt.Println(p.GetItem(coord[1], coord[0]))
 		}
 	}
 	return nil
