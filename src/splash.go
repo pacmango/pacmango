@@ -58,7 +58,7 @@ func renderSplash(r *sdl.Renderer) error {
 		if err != nil {
 			return fmt.Errorf("could not create title border texture from surface %d", index+1)
 		}
-		defer textTexture.Destroy()
+		defer textBorderTexture.Destroy()
 
 		if err := r.Copy(textTexture, nil, &sdl.Rect{X: 50, Y: titleTextVerticalPos[index], W: Width - 100, H: 100}); err != nil {
 			return fmt.Errorf("could not copy texture %d to render target", index+1)
