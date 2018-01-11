@@ -32,34 +32,43 @@ func renderSplash(r *sdl.Renderer) error {
 	}
 	defer titleFont.Close()
 
-
 	r.Clear()
 
-	//Create title text surfaces
-	titleTextSurfaces := make([]*sdl.Surface, 2*len(titleTextLines))
+	//Create and render title text with border
 	for index, text := range titleTextLines {
-		titleTextSurfaces[index+2], err = titleFont.RenderUTF8Solid(text, titleTextColor)
+		titleFont.SetOutline(0)
+		textSurface, err := titleFont.RenderUTF8Solid(text,titleTextColor)
 		if err != nil {
 			return fmt.Errorf("could not render title text surface for line %d", index+1)
 		}
-	}
-	titleFont.SetOutline(3)
-	for index, text := range titleTextLines {
-		titleTextSurfaces[index], err = titleFont.RenderUTF8Solid(text, titleTextOutlineColor)
+		defer textSurface.Free()
+
+		titleFont.SetOutline(3)
+		textBorderSurface, err := titleFont.RenderUTF8Solid(text,titleTextOutlineColor)
 		if err != nil {
-			return fmt.Errorf("could not render title text surface for line %d", index+1)
+			return fmt.Errorf("could not render title text border surface for line %d", index+1)
 		}
-	}
+		defer textBorderSurface.Free()
 
-	//Create title text textures and render
-
-
-	for index, surface := range titleTextSurfaces {
-		texture, err := r.CreateTextureFromSurface(surface)
+		textTexture, err := r.CreateTextureFromSurface(textSurface)
 		if err != nil {
 			return fmt.Errorf("could not create title text texture from surface %d", index+1)
 		}
-		r.Copy(texture, nil, &sdl.Rect{X: 50, Y: titleTextVerticalPos[index%2], W: Width - 100, H: 100})
+		defer textTexture.Destroy()
+
+		textBorderTexture, err := r.CreateTextureFromSurface(textBorderSurface)
+		if err != nil {
+			return fmt.Errorf("could not create title border texture from surface %d", index+1)
+		}
+		defer textTexture.Destroy()
+
+		if err := r.Copy(textTexture, nil, &sdl.Rect{X: 50, Y: titleTextVerticalPos[index], W: Width - 100, H: 100}); err != nil {
+			return fmt.Errorf("could not copy texture %d to render target", index+1)
+		}
+		if err := r.Copy(textBorderTexture, nil, &sdl.Rect{X: 50-2, Y: titleTextVerticalPos[index]-2, W: Width - 100+2, H: 100+2}); err != nil {
+			return fmt.Errorf("could not copy texture %d to render target", index+1)
+		}
+
 	}
 
 	r.Present()
