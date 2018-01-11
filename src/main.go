@@ -32,7 +32,7 @@ func main() {
 	//Initialize
 	err := sdl.Init(sdl.INIT_EVERYTHING)
 	if err != nil {
-		log.Fatal(fmt.Errorf("Error: SDL initialization failed - %v", err))
+		log.Fatal(fmt.Errorf("Error: SDL2 initialization failed - %v", err))
 	}
 	defer sdl.Quit()
 
