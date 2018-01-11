@@ -16,8 +16,6 @@ import (
 	"time"
 )
 
-//TODO: Add yellow text with red border instead of hollow yellow text
-
 var titleTextLines = []string{"Spectre", "Chase"}
 var titleTextColor = sdl.Color{R: 250, G: 206, B: 52, A: 255}
 var titleTextOutlineColor = sdl.Color{R: 175, G: 0, B: 0, A: 255}
