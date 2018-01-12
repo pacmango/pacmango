@@ -16,17 +16,30 @@
  )
 
 type Font struct {
-    *ttf.Font
-    color color.RGBA
+    Font *ttf.Font
+    Color color.RGBA
 }
 
 type Window struct {
-     renderer *sdl.Renderer
-     width int32
-     height int32
+     Renderer *sdl.Renderer
+     Width int32
+     Height int32
  }
 
 func NewTTFFont(fontFile string, fontSize int, color color.RGBA) (*Font, error) {
-    font, err := ttf.OpenFont(fontFile, fontSize)
-    return &Font{font, color}, err
+    f, err := ttf.OpenFont(fontFile, fontSize)
+    return &Font{Font : f, Color : color}, err
+}
+
+func (f *Font) CloseTTFFont() {
+    f.Font.Close()
+    *f = Font{}
+}
+
+func (f *Font) SetColor(color color.RGBA) {
+    f.Color = color
+}
+
+func (f *Font) GetColor() color.RGBA {
+    return f.Color
 }
