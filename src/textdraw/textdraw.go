@@ -18,3 +18,7 @@ type Window struct {
      Width int32
      Height int32
  }
+
+func NewWindow(r *sdl.Renderer, w, h int32) *Window {
+    return &Window{Renderer : r, Width : w, Height : h}
+}
