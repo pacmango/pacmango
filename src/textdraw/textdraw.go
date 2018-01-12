@@ -11,10 +11,15 @@
 
  import(
      "github.com/veandco/go-sdl2/sdl"
+     "github.com/veandco/go-sdl2/ttf"
  )
 
- type Window struct {
+type Window struct {
      renderer *sdl.Renderer
      width int32
      height int32
  }
+
+func NewTTFFont(fontFile string, fontSize int) (*ttf.Font, error) {
+    return ttf.OpenFont(fontFile, fontSize)
+}
