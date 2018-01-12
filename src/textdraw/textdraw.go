@@ -19,8 +19,8 @@ type Window struct {
 	Height   int32
 }
 
-func NewWindow(r *sdl.Renderer, w, h int32) *Window {
-	return &Window{Renderer: r, Width: w, Height: h}
+func NewWindow(renderer *sdl.Renderer, width, height int32) *Window {
+	return &Window{Renderer: renderer, Width: width, Height: height}
 }
 
 func (w *Window) SetWidth(width int32) {
@@ -37,4 +37,10 @@ func (w *Window) GetWidth() int32 {
 
 func (w *Window) GetHeight() int32 {
     return w.Height
+}
+
+//Renders text with given font in window w at position (x,y) [Upper-left corner of text]
+//Does not call Clear() or Present() on w.Renderer
+func (w *Window) DrawText(text string, font *Font, x, y int32) error {
+    return nil
 }
