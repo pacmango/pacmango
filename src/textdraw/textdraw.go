@@ -7,18 +7,34 @@
  **********************************************
  */
 
- package textdraw
+package textdraw
 
- import(
-     "github.com/veandco/go-sdl2/sdl"
- )
+import (
+	"github.com/veandco/go-sdl2/sdl"
+)
 
 type Window struct {
-     Renderer *sdl.Renderer
-     Width int32
-     Height int32
- }
+	Renderer *sdl.Renderer
+	Width    int32
+	Height   int32
+}
 
 func NewWindow(r *sdl.Renderer, w, h int32) *Window {
-    return &Window{Renderer : r, Width : w, Height : h}
+	return &Window{Renderer: r, Width: w, Height: h}
+}
+
+func (w *Window) SetWidth(width int32) {
+    w.Width = width
+}
+
+func (w *Window) SetHeight(height int32) {
+    w.Height = height
+}
+
+func (w *Window) GetWidth() int32 {
+    return w.Width
+}
+
+func (w *Window) GetHeight() int32 {
+    return w.Height
 }

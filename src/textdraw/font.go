@@ -7,32 +7,32 @@
  **********************************************
  */
 
- package textdraw
+package textdraw
 
- import(
-     "github.com/veandco/go-sdl2/ttf"
-     "image/color"
- )
+import (
+	"github.com/veandco/go-sdl2/ttf"
+	"image/color"
+)
 
- type Font struct {
-     Font *ttf.Font
-     Color color.RGBA
- }
+type Font struct {
+	Font  *ttf.Font
+	Color color.RGBA
+}
 
- func NewTTFFont(fontFile string, fontSize int, color color.RGBA) (*Font, error) {
-     f, err := ttf.OpenFont(fontFile, fontSize)
-     return &Font{Font : f, Color : color}, err
- }
+func NewTTFFont(fontFile string, fontSize int, color color.RGBA) (*Font, error) {
+	f, err := ttf.OpenFont(fontFile, fontSize)
+	return &Font{Font: f, Color: color}, err
+}
 
- func (f *Font) CloseTTFFont() {
-     f.Font.Close()
-     *f = Font{}
- }
+func (f *Font) CloseTTFFont() {
+	f.Font.Close()
+	*f = Font{}
+}
 
- func (f *Font) SetColor(color color.RGBA) {
-     f.Color = color
- }
+func (f *Font) SetColor(color color.RGBA) {
+	f.Color = color
+}
 
- func (f *Font) GetColor() color.RGBA {
-     return f.Color
- }
+func (f *Font) GetColor() color.RGBA {
+	return f.Color
+}
