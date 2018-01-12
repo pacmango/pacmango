@@ -12,7 +12,13 @@
  import(
      "github.com/veandco/go-sdl2/sdl"
      "github.com/veandco/go-sdl2/ttf"
+     "image/color"
  )
+
+type Font struct {
+    *ttf.Font
+    color color.RGBA
+}
 
 type Window struct {
      renderer *sdl.Renderer
@@ -20,6 +26,7 @@ type Window struct {
      height int32
  }
 
-func NewTTFFont(fontFile string, fontSize int) (*ttf.Font, error) {
-    return ttf.OpenFont(fontFile, fontSize)
+func NewTTFFont(fontFile string, fontSize int, color color.RGBA) (*Font, error) {
+    font, err := ttf.OpenFont(fontFile, fontSize)
+    return &Font{font, color}, err
 }
