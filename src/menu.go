@@ -11,20 +11,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/veandco/go-sdl2/sdl"
+	//"github.com/veandco/go-sdl2/sdl"
 	"image/color"
 	"textdraw"
 )
 
 var textColor = color.RGBA{R: 0, G: 0, B: 0, A: 255}
 
-func renderMenuScreen(r *sdl.Renderer) error {
+func renderMenuScreen(w *textdraw.Window) error {
 	menuFont, err := textdraw.NewTTFFont(MenuFontAddress, 20, textColor)
 	if err != nil {
 		return fmt.Errorf("Error: could not cretae new font - %v", err)
 	}
 	defer menuFont.CloseTTFFont()
-	r.Clear()
-	r.Present()
+	w.Renderer.Clear()
+	w.Renderer.Present()
 	return nil
 }

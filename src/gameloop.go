@@ -13,6 +13,7 @@ import(
     "github.com/veandco/go-sdl2/sdl"
     "log"
     "fmt"
+    "textdraw"
 )
 
 //Main gameloop
@@ -25,5 +26,5 @@ func gameloopDebug(r *sdl.Renderer) {
     if err != nil {
         log.Fatal(fmt.Errorf("Error: could not render splash screen - %v", err))
     }
-	renderMenuScreen(r)
+	renderMenuScreen(&textdraw.Window{Renderer: r, Width: Width, Height: Height})
 }
