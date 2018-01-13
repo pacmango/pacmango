@@ -42,5 +42,22 @@ func (w *Window) GetHeight() int32 {
 //Renders text with given font in window w at position (x,y) [Upper-left corner of text]
 //Does not call Clear() or Present() on w.Renderer
 func (w *Window) DrawText(text string, font *Font, x, y int32) error {
+	width, height, err := font.Font.SizeUTF8(text)
+
+	textSurface, err := font.Font.RenderUTF8Solid(text, font.GetSDLColor())
+	if err != nil {
+		return err
+	}
+	defer textSurface.Free()
+
+	textTexture, err := w.Renderer.CreateTextureFromSurface()
+	if err != nil {
+		return err
+	}
+	defer textTexture.Destroy()
+
+	if err := w.Renderer.Copy(textTexture, nil, &sdl.Rect{X: x, Y: y, W: width, H: height}); err != nil {
+		return err
+	}
     return nil
 }

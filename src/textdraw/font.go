@@ -36,3 +36,7 @@ func (f *Font) SetColor(color color.RGBA) {
 func (f *Font) GetColor() color.RGBA {
 	return f.Color
 }
+
+func (f *Font) GetSDLColor() sdl.Color {
+	return sdl.Color{R: f.Color.R, G: f.Color.G, B: f.Color.B, A: f.Color.A}
+}
