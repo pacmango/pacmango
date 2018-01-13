@@ -41,3 +41,8 @@ func (f *Font) GetColor() color.RGBA {
 func (f *Font) GetSDLColor() sdl.Color {
 	return sdl.Color{R: f.Color.R, G: f.Color.G, B: f.Color.B, A: f.Color.A}
 }
+
+func (f *Font) GetLineWidth(text string) int32 {
+	width,_,_ := f.Font.SizeUTF8(text)
+	return int32(width)
+}

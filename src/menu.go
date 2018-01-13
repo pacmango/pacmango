@@ -51,10 +51,11 @@ func renderMenuScreen(w *textdraw.Window) error {
 	defer menuFont.CloseTTFFont()
 	w.Renderer.Clear()
 	drawLogo(w,(Width-287)/2,-10)
-    w.DrawText("Hello",menuFont,20,170)
-    w.DrawText("This is the main menu",menuFont,20,200)
     menuFont.SetColor(color.RGBA{R: 240, G: 255, B: 98, A: 255})
-    w.DrawText("> Start Game",menuFont,20,230)
+    w.DrawText(">Start Game",menuFont,(Width-menuFont.GetLineWidth("Start Game"))/2-20,230)
+	menuFont.SetColor(textColor)
+	w.DrawText("About",menuFont,(Width-menuFont.GetLineWidth("About"))/2,270)
+	w.DrawText("Quit",menuFont,(Width-menuFont.GetLineWidth("Quit"))/2,310)
 	w.Renderer.Present()
 	return nil
 }
