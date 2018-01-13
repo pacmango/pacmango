@@ -43,6 +43,9 @@ func (w *Window) GetHeight() int32 {
 //Does not call Clear() or Present() on w.Renderer
 func (w *Window) DrawText(text string, font *Font, x, y int32) error {
 	width, height, err := font.Font.SizeUTF8(text)
+	if err != nil {
+		return err
+	}
 
 	textSurface, err := font.Font.RenderUTF8Solid(text, font.GetSDLColor())
 	if err != nil {
