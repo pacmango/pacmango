@@ -12,61 +12,17 @@ package main
 import (
 	"fmt"
 	"github.com/veandco/go-sdl2/sdl"
-	"github.com/veandco/go-sdl2/ttf"
 	"time"
+	"textdraw"
 )
-
-var titleTextLines = []string{"Spectre", "Chase"}
-var titleTextColor = sdl.Color{R: 250, G: 206, B: 52, A: 255}
-var titleTextOutlineColor = sdl.Color{R: 175, G: 0, B: 0, A: 255}
-var titleTextVerticalPos = []int32{100, 200, 300}
 
 //Create and display splash screen for three seconds
 func renderSplash(r *sdl.Renderer) error {
-	//Load font
-	titleFont, err := ttf.OpenFont(TitleFontAddress, 200)
-	if err != nil {
-		return fmt.Errorf("could not open title font")
-	}
-	defer titleFont.Close()
-
 	r.Clear()
 
-	//Create and render title text with border
-	for index, text := range titleTextLines {
-		titleFont.SetOutline(0)
-		textSurface, err := titleFont.RenderUTF8Blended(text,titleTextColor)
-		if err != nil {
-			return fmt.Errorf("could not render title text surface for line %d", index+1)
-		}
-		defer textSurface.Free()
-
-		titleFont.SetOutline(3)
-		textBorderSurface, err := titleFont.RenderUTF8Blended(text,titleTextOutlineColor)
-		if err != nil {
-			return fmt.Errorf("could not render title text border surface for line %d", index+1)
-		}
-		defer textBorderSurface.Free()
-
-		textTexture, err := r.CreateTextureFromSurface(textSurface)
-		if err != nil {
-			return fmt.Errorf("could not create title text texture from surface %d", index+1)
-		}
-		defer textTexture.Destroy()
-
-		textBorderTexture, err := r.CreateTextureFromSurface(textBorderSurface)
-		if err != nil {
-			return fmt.Errorf("could not create title border texture from surface %d", index+1)
-		}
-		defer textBorderTexture.Destroy()
-
-		if err := r.Copy(textTexture, nil, &sdl.Rect{X: 50, Y: titleTextVerticalPos[index], W: Width - 100, H: 100}); err != nil {
-			return fmt.Errorf("could not copy text texture %d to render target", index+1)
-		}
-		if err := r.Copy(textBorderTexture, nil, &sdl.Rect{X: 50-3, Y: titleTextVerticalPos[index]-3, W: Width - 100+3, H: 100+3}); err != nil {
-			return fmt.Errorf("could not copy border texture %d to render target", index+1)
-		}
-
+	err := drawLogo(&textdraw.Window{Renderer: r, Width: Width, Height: Height},(Width-287)/2,(Height-300)/2)
+	if err != nil {
+		return fmt.Errorf("Error: could not render splash screen - %v", err)
 	}
 
 	r.Present()
