@@ -11,6 +11,7 @@ package textdraw
 
 import (
 	"github.com/veandco/go-sdl2/ttf"
+	"github.com/veandco/go-sdl2/sdl"
 	"image/color"
 )
 

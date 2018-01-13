@@ -7,14 +7,24 @@
  **********************************************
  */
 
- package main
+package main
 
- import(
-     "github.com/veandco/go-sdl2/sdl"
- )
+import (
+	"fmt"
+	"github.com/veandco/go-sdl2/sdl"
+	"image/color"
+	"textdraw"
+)
 
- func renderMenuScreen(r *sdl.Renderer) error {
-     r.Clear()
-     r.Present()
-     return nil
- }
+var textColor = color.RGBA{R: 0, G: 0, B: 0, A: 255}
+
+func renderMenuScreen(r *sdl.Renderer) error {
+	menuFont, err := textdraw.NewTTFFont(MenuFontAddress, 20, textColor)
+	if err != nil {
+		return fmt.Errorf("Error: could not cretae new font - %v", err)
+	}
+	defer menuFont.CloseTTFFont()
+	r.Clear()
+	r.Present()
+	return nil
+}
