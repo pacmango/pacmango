@@ -53,13 +53,13 @@ func (w *Window) DrawText(text string, font *Font, x, y int32) error {
 	}
 	defer textSurface.Free()
 
-	textTexture, err := w.Renderer.CreateTextureFromSurface()
+	textTexture, err := w.Renderer.CreateTextureFromSurface(textSurface)
 	if err != nil {
 		return err
 	}
 	defer textTexture.Destroy()
 
-	if err := w.Renderer.Copy(textTexture, nil, &sdl.Rect{X: x, Y: y, W: width, H: height}); err != nil {
+	if err := w.Renderer.Copy(textTexture, nil, &sdl.Rect{X: x, Y: y, W: int32(width), H: int32(height)}); err != nil {
 		return err
 	}
     return nil
