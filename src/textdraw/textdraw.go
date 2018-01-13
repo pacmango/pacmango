@@ -64,3 +64,23 @@ func (w *Window) DrawText(text string, font *Font, x, y int32) error {
 	}
     return nil
 }
+
+//DrawText() with specified width and height -- will stretch text
+func (w *Window) DrawSizedText(text string, font *Font, x, y, w, h int32) error {
+	textSurface, err := font.Font.RenderUTF8Solid(text, font.GetSDLColor())
+	if err != nil {
+		return err
+	}
+	defer textSurface.Free()
+
+	textTexture, err := w.Renderer.CreateTextureFromSurface(textSurface)
+	if err != nil {
+		return err
+	}
+	defer textTexture.Destroy()
+
+	if err := w.Renderer.Copy(textTexture, nil, &sdl.Rect{X: x, Y: y, W: w, H: h}); err != nil {
+		return err
+	}
+    return nil
+}
