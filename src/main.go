@@ -19,7 +19,7 @@ import (
 const Width int32 = 448
 const Height int32 = 576
 const TitleFontAddress string = "fonts/Ceviche_One/CevicheOne-Regular.ttf"
-const MenuFontAddress string = "fonts/Ceviche_One/CevicheOne-Regular.ttf"
+const MenuFontAddress string = "fonts/PressStart2P/PressStart2P-Regular.ttf"
 
 func checkQuitEvent(event sdl.Event) bool {
 	switch event.(type) {

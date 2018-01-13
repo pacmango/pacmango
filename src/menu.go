@@ -16,7 +16,7 @@ import (
 	"textdraw"
 )
 
-var textColor = color.RGBA{R: 0, G: 0, B: 0, A: 255}
+var textColor = color.RGBA{R: 255, G: 255, B: 255, A: 255}
 
 func renderMenuScreen(w *textdraw.Window) error {
 	menuFont, err := textdraw.NewTTFFont(MenuFontAddress, 20, textColor)
@@ -25,6 +25,10 @@ func renderMenuScreen(w *textdraw.Window) error {
 	}
 	defer menuFont.CloseTTFFont()
 	w.Renderer.Clear()
+    w.DrawText("Hello",menuFont,20,20)
+    w.DrawText("This is the main menu",menuFont,20,50)
+    menuFont.SetColor(color.RGBA{R: 240, G: 255, B: 98, A: 255})
+    w.DrawText("> Start Game",menuFont,20,80)
 	w.Renderer.Present()
 	return nil
 }
