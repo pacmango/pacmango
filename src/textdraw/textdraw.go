@@ -67,7 +67,7 @@ func (w *Window) DrawText(text string, font *Font, x, y int32) error {
 
 //DrawText() with specified width and height -- will stretch text
 func (w *Window) DrawSizedText(text string, font *Font, x, y, width, height int32) error {
-	textSurface, err := font.Font.RenderUTF8Solid(text, font.GetSDLColor())
+	textSurface, err := font.Font.RenderUTF8Blended(text, font.GetSDLColor())
 	if err != nil {
 		return err
 	}
