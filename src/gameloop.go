@@ -25,5 +25,5 @@ func gameloopDebug(r *sdl.Renderer) {
     if err != nil {
         log.Fatal(fmt.Errorf("Error: could not render splash screen - %v", err))
     }
-	renderBoard(r)
+	renderMenuScreen(r)
 }

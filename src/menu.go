@@ -14,5 +14,7 @@
  )
 
  func renderMenuScreen(r *sdl.Renderer) error {
+     r.Clear()
+     r.Present()
      return nil
  }
