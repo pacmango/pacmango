@@ -35,14 +35,14 @@ func renderSplash(r *sdl.Renderer) error {
 	//Create and render title text with border
 	for index, text := range titleTextLines {
 		titleFont.SetOutline(0)
-		textSurface, err := titleFont.RenderUTF8Solid(text,titleTextColor)
+		textSurface, err := titleFont.RenderUTF8Blended(text,titleTextColor)
 		if err != nil {
 			return fmt.Errorf("could not render title text surface for line %d", index+1)
 		}
 		defer textSurface.Free()
 
 		titleFont.SetOutline(3)
-		textBorderSurface, err := titleFont.RenderUTF8Solid(text,titleTextOutlineColor)
+		textBorderSurface, err := titleFont.RenderUTF8Blended(text,titleTextOutlineColor)
 		if err != nil {
 			return fmt.Errorf("could not render title text border surface for line %d", index+1)
 		}
@@ -63,7 +63,7 @@ func renderSplash(r *sdl.Renderer) error {
 		if err := r.Copy(textTexture, nil, &sdl.Rect{X: 50, Y: titleTextVerticalPos[index], W: Width - 100, H: 100}); err != nil {
 			return fmt.Errorf("could not copy text texture %d to render target", index+1)
 		}
-		if err := r.Copy(textBorderTexture, nil, &sdl.Rect{X: 50-2, Y: titleTextVerticalPos[index]-2, W: Width - 100+2, H: 100+2}); err != nil {
+		if err := r.Copy(textBorderTexture, nil, &sdl.Rect{X: 50-3, Y: titleTextVerticalPos[index]-3, W: Width - 100+3, H: 100+3}); err != nil {
 			return fmt.Errorf("could not copy border texture %d to render target", index+1)
 		}
 
