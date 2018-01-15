@@ -18,6 +18,22 @@ import (
 
 var textColor = color.RGBA{R: 255, G: 255, B: 255, A: 255}
 
+type MenuItem struct {
+	number   uint8
+	text     string
+	selected bool
+}
+
+type Menu []*MenuItem
+
+func initializeMenu() Menu {
+	return Menu{
+		&MenuItem{number: 0, text: "Start Game", selected: true},
+		&MenuItem{number: 1, text: "About", selected: false},
+		&MenuItem{number: 2, text: "Exit", selected: false},
+	}
+}
+
 func drawLogo(w *textdraw.Window, x, y int32) error {
 	logoTextLines := []string{"Spectre", "Chase"}
 	logoTextColor := color.RGBA{R: 250, G: 206, B: 52, A: 255}
@@ -34,10 +50,10 @@ func drawLogo(w *textdraw.Window, x, y int32) error {
 	for i, text := range logoTextLines {
 		logoFont.Font.SetOutline(0)
 		logoFont.Color = logoTextColor
-		w.DrawSizedText(text,logoFont, x, y + int32(i)*80, int32(width), int32(height))
+		w.DrawSizedText(text, logoFont, x, y+int32(i)*80, int32(width), int32(height))
 		logoFont.Color = logoTextOutlineColor
 		logoFont.Font.SetOutline(2)
-		w.DrawSizedText(text,logoFont, x - 4, y - 4 + int32(i)*80, int32(width) + 4, int32(height) + 4)
+		w.DrawSizedText(text, logoFont, x-4, y-4+int32(i)*80, int32(width)+4, int32(height)+4)
 	}
 
 	return nil
@@ -50,12 +66,12 @@ func renderMenuScreen(w *textdraw.Window) error {
 	}
 	defer menuFont.CloseTTFFont()
 	w.Renderer.Clear()
-	drawLogo(w,(Width-287)/2,-10)
-    menuFont.SetColor(color.RGBA{R: 240, G: 255, B: 98, A: 255})
-    w.DrawText(">Start Game",menuFont,(Width-menuFont.GetLineWidth("Start Game"))/2-20,230)
+	drawLogo(w, (Width-287)/2, -10)
+	menuFont.SetColor(color.RGBA{R: 240, G: 255, B: 98, A: 255})
+	w.DrawText(">Start Game", menuFont, (Width-menuFont.GetLineWidth("Start Game"))/2-20, 230)
 	menuFont.SetColor(textColor)
-	w.DrawText("About",menuFont,(Width-menuFont.GetLineWidth("About"))/2,270)
-	w.DrawText("Quit",menuFont,(Width-menuFont.GetLineWidth("Quit"))/2,310)
+	w.DrawText("About", menuFont, (Width-menuFont.GetLineWidth("About"))/2, 270)
+	w.DrawText("Quit", menuFont, (Width-menuFont.GetLineWidth("Quit"))/2, 310)
 	w.Renderer.Present()
 	return nil
 }
