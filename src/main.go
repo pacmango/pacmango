@@ -29,30 +29,30 @@ func checkQuitEvent(event sdl.Event) bool {
 	return false
 }
 
-func main() {
+func run() error {
 	//Initialize
 	err := sdl.Init(sdl.INIT_EVERYTHING)
 	if err != nil {
-		log.Fatal(fmt.Errorf("Error: SDL2 initialization failed - %v", err))
+		return fmt.Errorf("Error: SDL2 initialization failed - %v", err)
 	}
 	defer sdl.Quit()
 
 	err = ttf.Init()
 	if err != nil {
-		log.Fatal(fmt.Errorf("Error: SDL2_TTF initialization failed - %v", err))
+		return fmt.Errorf("Error: SDL2_TTF initialization failed - %v", err)
 	}
 	defer ttf.Quit()
 
 	//Create window and renderer
 	window, err := sdl.CreateWindow("Pacman", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, Width, Height, sdl.WINDOW_SHOWN)
 	if err != nil {
-		log.Fatal(fmt.Errorf("Error: Could not create window - %v", err))
+		return fmt.Errorf("Error: Could not create window - %v", err)
 	}
 	defer window.Destroy()
 
 	renderer, err := sdl.CreateRenderer(window, -1, 0)
 	if err != nil {
-		log.Fatal(fmt.Errorf("Error: Could not create renderer - %v", err))
+		return fmt.Errorf("Error: Could not create renderer - %v", err)
 	}
 	defer renderer.Destroy()
 
@@ -65,5 +65,12 @@ func main() {
 		if checkQuitEvent(event) {
 			windowRunning = false
 		}
+	}
+	return nil
+}
+
+func main() {
+	if err := run(); err != nil {
+		log.Fatal(err)
 	}
 }
