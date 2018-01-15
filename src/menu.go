@@ -14,12 +14,13 @@ import (
 	//"github.com/veandco/go-sdl2/sdl"
 	"image/color"
 	"textdraw"
+	"strings"
 )
 
 var textColor = color.RGBA{R: 255, G: 255, B: 255, A: 255}
 
 type MenuItem struct {
-	number   uint8
+	number   int32
 	text     string
 	selected bool
 }
@@ -67,11 +68,22 @@ func renderMenuScreen(w *textdraw.Window) error {
 	defer menuFont.CloseTTFFont()
 	w.Renderer.Clear()
 	drawLogo(w, (Width-287)/2, -10)
-	menuFont.SetColor(color.RGBA{R: 240, G: 255, B: 98, A: 255})
-	w.DrawText(">Start Game", menuFont, (Width-menuFont.GetLineWidth("Start Game"))/2-20, 230)
-	menuFont.SetColor(textColor)
-	w.DrawText("About", menuFont, (Width-menuFont.GetLineWidth("About"))/2, 270)
-	w.DrawText("Quit", menuFont, (Width-menuFont.GetLineWidth("Quit"))/2, 310)
+
+	menu := initializeMenu()
+	for _, item := range menu {
+		if item.selected {
+			menuFont.SetColor(color.RGBA{R: 240, G: 255, B: 98, A: 255})
+			displayText := strings.Join([]string{">",item.text},"")
+			w.DrawText(displayText,
+				menuFont,
+				(Width-menuFont.GetLineWidth(item.text))/2-20, 230+item.number*40)
+		} else {
+			menuFont.SetColor(textColor)
+			w.DrawText(item.text,
+				menuFont,
+				(Width-menuFont.GetLineWidth(item.text))/2, 230+item.number*40)
+		}
+	}
 	w.Renderer.Present()
 	return nil
 }
